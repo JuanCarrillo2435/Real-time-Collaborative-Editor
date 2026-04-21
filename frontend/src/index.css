@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: hsl(210 20% 98%);
+  --color-paper: hsl(0 0% 100%);
+  --color-surface: hsl(0 0% 100%);
+  --color-border: hsl(214 32% 91%);
+  --color-foreground: hsl(222 47% 11%);
+  --color-muted: hsl(215.4 16.3% 46.9%);
+  --color-accent: hsl(245 58% 51%);
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Georgia', serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-foreground);
+    @apply antialiased min-h-screen selection:bg-accent/20;
+  }
+}
+
+/* Custom TipTap Editor Styles */
+.ProseMirror {
+  @apply min-h-[500px] outline-none;
+}
+
+.ProseMirror > * + * {
+  margin-top: 0.75em;
+}
+
+.ProseMirror p {
+  @apply tracking-normal text-[17px] text-gray-700 leading-[1.65];
+}
+
+.ProseMirror h1 {
+  @apply text-4xl font-bold mb-6 mt-10 tracking-tight text-gray-900 leading-tight;
+}
+
+.ProseMirror h2 {
+  @apply text-2xl font-semibold mb-4 mt-8 tracking-tight text-gray-800 border-b border-gray-100 pb-2;
+}
+
+.ProseMirror ul {
+  @apply list-disc list-inside mb-4 space-y-2 text-gray-700 marker:text-gray-400;
+}
+
+.ProseMirror ol {
+  @apply list-decimal list-inside mb-4 space-y-2 text-gray-700 marker:text-gray-400;
+}
+
+.ProseMirror blockquote {
+  @apply border-l-[3px] border-indigo-200 pl-5 py-0.5 mb-4 italic text-gray-500 bg-indigo-50/30 rounded-r-lg;
+}
+
+.ProseMirror code {
+  @apply bg-gray-100 text-pink-600 rounded-md px-1.5 py-0.5 text-[0.85em] font-mono border border-gray-200/60;
+}
+
+.ProseMirror pre {
+  @apply bg-[#0f111a] text-gray-100 rounded-xl p-5 font-mono text-sm overflow-x-auto mb-6 shadow-sm;
+}
+
+.ProseMirror pre code {
+  @apply bg-transparent text-inherit p-0 border-none;
+}
+
+/* Placeholder Extension Styles */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  @apply float-left text-gray-300 pointer-events-none h-0 italic;
+}
+
+/* Yjs Collaborative Cursor Extension Styles */
+.collaboration-cursor__caret {
+  @apply relative ml-[-1px] mr-[-1px] border-l-2 border-r-2 border-transparent break-normal pointer-events-none;
+  word-break: normal;
+}
+
+/* Render the custom label of the remote user's cursor dynamically */
+.collaboration-cursor__label {
+  @apply absolute left-[-2px] bottom-[100%] leading-normal text-[11px] font-semibold text-white bg-inherit px-2 py-0.5 whitespace-nowrap rounded-md rounded-bl-none transform transition-all duration-200 opacity-0 select-none shadow-md border border-black/10;
+}
+
+.collaboration-cursor__caret:hover .collaboration-cursor__label {
+  @apply opacity-100;
+}
+
+/* Animate presence indicator */
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.presence-ping::before {
+  content: '';
+  @apply absolute inset-0 rounded-full bg-inherit;
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+/* Scrollbar minimal */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-200 rounded-full;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-300;
+}
